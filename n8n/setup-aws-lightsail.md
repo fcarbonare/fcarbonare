@@ -1,6 +1,7 @@
 ### Instalando o N8N no AWS Lightsail
 
-Atualmente esta é a minha prnincipal opção para rodar um servidor N8N. O (AWS Lightsail)[https://aws.amazon.com/pt/lightsail/pricing/] oferece opções de instâncias muito econômicas e fáceis de gerir.
+Atualmente esta é a minha prnincipal opção para rodar um servidor N8N. O [AWS Lightsail](https://aws.amazon.com/pt/lightsail/pricing/) oferece opções de instâncias muito econômicas e fáceis de gerir.
+
 O N8N é uma aplicação muito leve, sendo possível tirar bastante proveito do sistema com servidores simples. Tenho conseguido ótimos resultados com servidores de 1GB RAM e 1vCPU, modelo que trará um custo mensal de USD 10,00. Muito mais barato do que soluções similares como Zapier, Pluga e Make (ex-Integromat).
 
 ## Passo-a-passo
