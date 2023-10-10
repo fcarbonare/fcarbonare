@@ -14,6 +14,28 @@
 ^[^\s@]+@[^\s@]+\.[^\s@]+$
 ```
 
+### Social URLs
+
+Instagram:
+```
+^(http(s)?:\/\/)(www\.)?instagram\.com\/(.*)
+```
+
+Linkedin personal profile:
+```
+^(http(s)?:\/\/)(www\.)?linkedin\.com\/in\/(.*)
+```
+
+Linkedin company profile:
+```
+^(http(s)?:\/\/)(www\.)?linkedin\.com\/company\/(.*)
+```
+
+Facebook:
+```
+^(http(s)?:\/\/)(www\.)?facebook\.com\/(.*)
+```
+
 ## Exemplo de uso de validação em JavaScript
 
 ```
@@ -27,3 +49,6 @@ else
   console.log("Email inválido");
 }
 ```
+
+## Ferramenta online para testar e debugar regex:
+- [Regex101](https://regex101.com/)
