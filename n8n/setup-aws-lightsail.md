@@ -145,3 +145,17 @@ sudo systemctl restart nginx
 Volte ao painel do Lightsail e exclua a porta 5678 do ipv4 e ipv6 - por segurança.
 
 Pronto, o N8N está rodando.
+
+## Otimização de memória
+
+Com o uso intenso e nos momentos de upgrade e instalação, usando um servidor Lightsail com pouca memória, adicionar um arquivo SWAP melhora bastante a estabilidade e capacidade do ambiente.
+
+# Crie e habilite um swap file:
+
+```
+sudo fallocate -l 1G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+```
