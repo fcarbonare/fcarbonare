@@ -23,12 +23,12 @@ Instagram:
 
 Linkedin personal profile:
 ```
-^(http(s)?:\/\/)(www\.)?linkedin\.com\/in\/(.*)
+^(http(s)?:\/\/)(\w+\.)?linkedin\.com\/in\/(.*)
 ```
 
 Linkedin company profile:
 ```
-^(http(s)?:\/\/)(www\.)?linkedin\.com\/company\/(.*)
+^(http(s)?:\/\/)(\w+\.)?linkedin\.com\/company\/(.*)
 ```
 
 Facebook:
