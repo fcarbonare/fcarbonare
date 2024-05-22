@@ -7,7 +7,7 @@ SELECT
     )
   ) AS links 
 FROM 
-  "blanc-bi"."website_check" 
+  "database" 
 limit 
   10;
 
@@ -28,7 +28,7 @@ SELECT
     )
   ), x -> x like '%facebook.com/%') AS facebook 
 FROM 
-  "blanc-bi"."website_check" 
+  "database" 
 limit 
   100;
 ```

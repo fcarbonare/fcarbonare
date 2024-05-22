@@ -4,3 +4,4 @@ Ideas and things to watch
 - [PeerTube](https://joinpeertube.org/): Self-hosted youtube alternative open-souce
 - [VitePress](https://vitepress.dev/): Static Site Generator framework, very good interface for documentation site (ex: https://docs.joinpeertube.org/)
 - [Documate](https://documate.site/): An open-source tool for embedding AI chat dialog into your doc site to answer user questions based on your content. Use OpenAI API to create a chatbot that gives answers based on VitePress documentation site
+- [nanoid-good](https://github.com/y-gagar1n/nanoid-good): a lib to generate URL safe nano ids

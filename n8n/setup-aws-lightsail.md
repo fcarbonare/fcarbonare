@@ -159,3 +159,16 @@ sudo mkswap /swapfile
 sudo swapon /swapfile
 echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 ```
+
+# Se for trabalhar com imagens, instalar o GraphicsMagick
+```
+sudo apt-get install gcc make autoconf automake graphviz libtool docutils-common m4
+sudo apt-get install libbz2-dev libfreetype6-dev libjbig-dev liblcms2-dev liblzma-dev libpng-dev libtiff-dev libtool libwebp-dev libwmf-dev libx11-dev libxdmcp-dev libxext-dev libxft-dev libxml2-dev libxt-dev libzstd-dev zlib1g-dev libperl-dev libjpeg-dev ghostscript libtiff5-dev libfreetype6 dcraw fonts-urw-base35 hp2xx ttf-mscorefonts-installer
+wget https://netix.dl.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.43/GraphicsMagick-1.3.43.tar.xz
+tar xf GraphicsMagick-1.3.43.tar.xz
+cd GraphicsMagick-1.3.43/
+./configure
+make
+sudo make install
+```
+[Tutorial completo](https://gist.github.com/neoneye/00fad388e38f5b0361f66cc1a3b2f57e)
