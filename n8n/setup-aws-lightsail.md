@@ -160,7 +160,20 @@ sudo swapon /swapfile
 echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 ```
 
-# Se for trabalhar com imagens, instalar o GraphicsMagick
+## Updates
+
+```
+n8n -v
+pnpm update
+pnpm update -g n8n
+pm2 restart ecosystem.config.js --update-env
+n8n -v
+```
+
+
+## Imagens
+
+**Se for trabalhar com imagens usando o módulo nativo, instalar o GraphicsMagick**
 ```
 sudo apt-get install gcc make autoconf automake graphviz libtool docutils-common m4
 sudo apt-get install libbz2-dev libfreetype6-dev libjbig-dev liblcms2-dev liblzma-dev libpng-dev libtiff-dev libtool libwebp-dev libwmf-dev libx11-dev libxdmcp-dev libxext-dev libxft-dev libxml2-dev libxt-dev libzstd-dev zlib1g-dev libperl-dev libjpeg-dev ghostscript libtiff5-dev libfreetype6 dcraw fonts-urw-base35 hp2xx ttf-mscorefonts-installer
@@ -172,3 +185,11 @@ make
 sudo make install
 ```
 [Tutorial completo](https://gist.github.com/neoneye/00fad388e38f5b0361f66cc1a3b2f57e)
+
+**Para ter alguns recursos mais avançados uso o sharp**
+```
+pnpm install sharp
+```
+
+**Para gerar QR Codes instale o qr-image**
+https://www.npmjs.com/package/qr-image
