@@ -1,4 +1,6 @@
-1. Setting up android phone
+# Usando celular antigo como servidor
+
+## 1. Configurando o android
 
 - Install Termux
 https://f-droid.org/pt/packages/com.termux/
@@ -6,42 +8,47 @@ https://f-droid.org/pt/packages/com.termux/
 - Install Termux:Boot
 https://f-droid.org/pt/packages/com.termux.boot/
 
-Go to Android Settings and diable battery optimization for both.
+- Vá nas configurações do celular e desabilite a otimização de bateria para os dois aplicativos.
 
-2. Setting up termux enviroment
+## 2. Configurando o termux
 
 - [SSH Server](https://wiki.termux.com/wiki/Remote_Access#Starting_and_stopping_OpenSSH_server)
 
-Install SSH Server
+Instalando o servidor SSH
 ```
 pkg upgrade
 pkg install openssh
 ```
 
-Define a password and star service
+Defina uma senha e inicie o serviço
 ```
 passwd
 sshd
 ```
 
-Discover your IP
+Descubra o IP da sua rede local para se conectar via SSH
 ```
 ifconfig
 ```
 
-Connect from computer on the same Wifi network.
+Conecte de um computador que estiver na mesma rede WiFi
 ```
 ssh [IP] -p 8022 -l user
 ```
 
-Avoid password by copying the content of your private key (~/id_rsa.pub) to the device into the file $HOME/.ssh/authorized_keys
+Evite digitar a senha toda vez que for se conectar copiando o conteúdo da sua chave privada local (~/id_rsa.pub) para o arquivo de chaves autorizadas do celular: $HOME/.ssh/authorized_keys
 
 - Utils
 
-Instalar o vi:
+Instale o vi:
 ```
 pkg install x11-repo
 pkg install vim-gtk
+```
+
+Instale o git
+```
+pkg update && pkg upgrade && pkg install git -y
 ```
 
 - [Termux Services](https://wiki.termux.com/wiki/Termux-services)
@@ -49,15 +56,15 @@ pkg install vim-gtk
 pkg install termux-services -y
 ```
 
-Create the ~/.termux/boot/ directory.
-Create the file ~/.termux/boot/start-sshd:
+Crie o diretório ~/.termux/boot
+Crie o arquivo ~/.termux/boot/start-sshd
 ```
 #!/data/data/com.termux/files/usr/bin/sh
 termux-wake-lock
 . $PREFIX/etc/profile
 ```
 
-Enable SSHD service
+Ative o serviço do SSHD
 ```
 sv-enable sshd
 ```
@@ -90,7 +97,8 @@ sv up nginx
 sv-enable nginx
 ```
 
-Test page will be live on the address: http://[IP ADDRESS]:8080/
+Você vai poder acessar a página de teste no endereço: http://[IP ADDRESS]:8080/
+O Chrome vai apresentar erro, pois não possui certificado SSL.
 
 - PHP
 
@@ -114,4 +122,22 @@ pkg install clang libsqlite pkg-config -y
 pkg install sqlite -y
 npm install pnpm -g
 pnpm install n8n -g
+```
+
+## Deixando o nginx público via [cloudflared](https://github.com/rajbhx/cloudflared-termux)
+
+```
+git clone https://github.com/rajbhx/cloudflared-termux
+cd cloudflared-termux
+chmod +x Cloudflared-termux_@rajbhx.sh
+bash Cloudflared-termux_@rajbhx.sh
+```
+
+- Siga as instruções para configurar o tunnel:
+https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/
+
+Crie o arquivo ~/.termux/boot/start-cloudflared:
+```
+#!/data/data/com.termux/files/usr/bin/sh
+cloudflared tunnel run [ID]
 ```

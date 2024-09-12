@@ -1,0 +1,378 @@
+{
+  "name": "Website Domain Check",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "domain-check",
+        "responseMode": "responseNode",
+        "options": {
+          "ignoreBots": false
+        }
+      },
+      "id": "a83bc73b-2156-4743-b0b3-0d90432e1bc1",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        840,
+        380
+      ],
+      "webhookId": "ee8624db-b8e0-4679-844b-2e1e3b1240c1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.query.host }}",
+              "operation": "isNotEmpty"
+            }
+          ],
+          "boolean": [
+            {
+              "value1": "={{ (/^(((?!-))(xn--|_)?[a-z0-9-]{0,61}[a-z0-9]{1,1}\\.)*(xn--)?([a-z0-9][a-z0-9\\-]{0,60}|[a-z0-9-]{1,30}\\.[a-z]{2,})$/).test($json.query.host) }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "1f5ca845-97f6-48dd-a13f-1aaaaf18abe4",
+      "name": "checkSyntax",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "noData",
+        "options": {
+          "responseCode": 400
+        }
+      },
+      "id": "50281b5f-a5e6-469f-8e70-ab3251ad74b2",
+      "name": "400 - BadRequest",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1220,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://{{ $json.query.host }}",
+        "options": {
+          "allowUnauthorizedCerts": true,
+          "redirect": {
+            "redirect": {
+              "maxRedirects": 3
+            }
+          },
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          },
+          "timeout": 10000
+        }
+      },
+      "id": "c6d13612-084d-41da-97c6-1089e7ebf33a",
+      "name": "tryHTTPS",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1220,
+        320
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.statusCode }}",
+              "operation": "equal",
+              "value2": 200
+            }
+          ]
+        }
+      },
+      "id": "fc20db61-d7af-4c61-abe0-b4396e3e2b5e",
+      "name": "success",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "OK",
+        "options": {}
+      },
+      "id": "cd5d264b-0784-431a-88ba-526f82bf88af",
+      "name": "200 - OK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        2060,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=http://{{ $('Webhook').item.json.query.host }}",
+        "options": {
+          "allowUnauthorizedCerts": true,
+          "redirect": {
+            "redirect": {
+              "maxRedirects": 3
+            }
+          },
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          },
+          "timeout": 10000
+        }
+      },
+      "id": "d535c85b-eec5-4249-b6f1-f169e48053da",
+      "name": "tryHTTP",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1640,
+        440
+      ],
+      "alwaysOutputData": true,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.statusCode }}",
+              "operation": "equal",
+              "value2": 200
+            }
+          ]
+        }
+      },
+      "id": "ae93c73d-cf51-4a91-8852-30fdf5e11f6a",
+      "name": "successHTTP",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "invalid",
+        "options": {
+          "responseCode": 404
+        }
+      },
+      "id": "4b6f045c-befe-47a1-b8ea-a4726869ca6b",
+      "name": "404 - invalid",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        2060,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "bucketName": "",
+        "fileName": "=website-check/{{ $today.toISO().substring(0,10) }}/{{ $json.host }}.json",
+        "binaryData": false,
+        "fileContent": "={{ JSON.stringify( $json ) }}",
+        "additionalFields": {}
+      },
+      "id": "7e7815b3-6f89-466e-a42c-7d7bacfab20d",
+      "name": "saveData",
+      "type": "n8n-nodes-base.awsS3",
+      "typeVersion": 2,
+      "position": [
+        2500,
+        240
+      ],
+      "retryOnFail": true,
+      "waitBetweenTries": 2000,
+      "credentials": {
+        "aws": {
+          "id": "",
+          "name": ""
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "host",
+              "stringValue": "={{ $('Webhook').item.json.query.host.trim() }}"
+            },
+            {
+              "name": "date",
+              "stringValue": "={{ $today.toISO().substring(0,10) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "91369a12-ad2d-4545-85f1-c58cd0c4fe49",
+      "name": "addData",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [
+        2280,
+        240
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "checkSyntax",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "checkSyntax": {
+      "main": [
+        [
+          {
+            "node": "tryHTTPS",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "400 - BadRequest",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tryHTTPS": {
+      "main": [
+        [
+          {
+            "node": "success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "success": {
+      "main": [
+        [
+          {
+            "node": "200 - OK",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "tryHTTP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tryHTTP": {
+      "main": [
+        [
+          {
+            "node": "successHTTP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "successHTTP": {
+      "main": [
+        [
+          {
+            "node": "200 - OK",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "404 - invalid",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "200 - OK": {
+      "main": [
+        [
+          {
+            "node": "addData",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "addData": {
+      "main": [
+        [
+          {
+            "node": "saveData",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": false,
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionTimeout": 60,
+    "saveDataSuccessExecution": "none",
+    "saveExecutionProgress": false,
+    "errorWorkflow": ""
+  },
+  "versionId": "d0da0ee9-85d1-4135-a835-a06e87bf318c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "46af13655d85e81bb3b2f00c4a1a89f7259ec55d086507ccc94b9f181d1729ec"
+  },
+  "id": "",
+  "tags": []
+}
