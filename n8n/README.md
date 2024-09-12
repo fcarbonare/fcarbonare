@@ -17,3 +17,6 @@ Neste repositório registro alguns modelos de automações e trechos de códigos
 | [Binário de/para ASCII](utils/binary-ascii.md) | Convertendo dados binários para ASCII e vice-versa |
 | [Datas](utils/dates.md) | Formatação e tratamento de datas |
 | [Renomear arquivos](utils/renameFile.md) | Renomeando arquivo baixado com HTTP Request ou carregados do file system |
+
+## Setup
+- [Instalando o N8N na Amazon](setup-aws-lightsail.md)
