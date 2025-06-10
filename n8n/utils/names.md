@@ -3,11 +3,11 @@
 Nome:
 
 ```
-{{ $json.body.leads[0].name.split(' ')[0].trim() }}
+{{ $json.name.split(' ')[0].trim() }}
 ```
 
 Sobrenome:
 
 ```
-{{ $json.body.leads[0].name.replace($json.body.leads[0].name.split(' ')[0], '').trim() }}
+{{ $json.name.replace($json.body.leads[0].name.split(' ')[0], '').trim() }}
 ```
