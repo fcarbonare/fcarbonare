@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pipedrive Config Extractor</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f5f4f0;
+    color: #1a1a1a;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+  }
+
+  .container { max-width: 900px; margin: 0 auto; }
+
+  header { margin-bottom: 2rem; }
+  header h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+  header p  { font-size: 14px; color: #666; }
+
+  .card {
+    background: #fff;
+    border: 1px solid #e2e1dc;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; color: #444; }
+
+  .input-row { display: flex; gap: 10px; }
+
+  input[type="password"] {
+    flex: 1;
+    height: 38px;
+    border: 1px solid #d0cfc8;
+    border-radius: 8px;
+    padding: 0 12px;
+    font-size: 13px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    background: #fafaf8;
+    outline: none;
+    transition: border-color .15s;
+  }
+  input:focus { border-color: #555; background: #fff; }
+
+  .hint {
+    font-size: 12px;
+    color: #888;
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: #f8f8f5;
+    border-radius: 6px;
+  }
+
+  button.run {
+    height: 38px;
+    padding: 0 22px;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity .15s;
+  }
+  button.run:hover { opacity: .82; }
+  button.run:disabled { opacity: .4; cursor: not-allowed; }
+
+  .progress { margin-top: 1.25rem; display: none; flex-direction: column; gap: 6px; }
+  .prow { display: flex; align-items: center; gap: 10px; font-size: 13px; color: #555; }
+  .dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: #d0cfc8; flex-shrink: 0; transition: background .2s;
+  }
+  .dot.spin { background: #4a90d9; animation: pulse 1s infinite; }
+  .dot.done { background: #3a9e5f; }
+  .dot.fail { background: #d94a4a; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+  .status-msg {
+    font-size: 13px; margin-top: 10px; min-height: 18px;
+    padding: 7px 10px; border-radius: 6px; display: none;
+  }
+  .status-msg.info { background:#eef4ff; color:#2a5fb0; display:block; }
+  .status-msg.ok   { background:#edfbf3; color:#1e7a44; display:block; }
+  .status-msg.err  { background:#fef0f0; color:#b93333; display:block; }
+
+  #results { display: none; }
+
+  .section-title {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .section-title h2 { font-size: 15px; font-weight: 600; }
+  .section-title .meta { font-size: 12px; color: #888; }
+
+  .copy-bar {
+    display: flex; align-items: center; justify-content: flex-end;
+    gap: 8px; margin-bottom: 6px;
+  }
+  button.copy {
+    height: 30px; padding: 0 14px;
+    border: 1px solid #d0cfc8; border-radius: 6px;
+    background: #fff; font-size: 12px; cursor: pointer;
+    transition: background .12s;
+  }
+  button.copy:hover { background: #f5f4f0; }
+  .copy-ok { font-size: 12px; color: #3a9e5f; opacity: 0; transition: opacity .3s; }
+  .copy-ok.show { opacity: 1; }
+
+  textarea.md {
+    width: 100%; height: 260px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 12px; line-height: 1.65;
+    border: 1px solid #e2e1dc; border-radius: 8px;
+    background: #fafaf8; padding: 12px;
+    resize: vertical; outline: none;
+    color: #1a1a1a;
+  }
+  textarea.md:focus { border-color: #aaa; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Pipedrive Config Extractor</h1>
+    <p>Fetches Pipelines, Stages, and Activity Types and generates ready-to-use Markdown tables.</p>
+  </header>
+
+  <div class="card">
+    <label for="token">API Token</label>
+    <div class="input-row">
+      <input type="password" id="token" placeholder="Paste your Pipedrive API token…" autocomplete="off" />
+      <button class="run" id="runBtn" onclick="run()">Extract config</button>
+    </div>
+    <p class="hint">Find your token in Pipedrive → Settings → Personal preferences → API. Sent directly to <code>api.pipedrive.com</code> via <code>x-api-token</code> header.</p>
+
+    <div id="statusMsg" class="status-msg"></div>
+    <div id="progressList" class="progress"></div>
+  </div>
+
+  <div id="results">
+
+    <!-- Pipelines -->
+    <div class="card">
+      <div class="section-title">
+        <h2>Table 1 — Pipelines</h2>
+        <span class="meta" id="meta1"></span>
+      </div>
+      <div class="copy-bar">
+        <span class="copy-ok" id="ok1"></span>
+        <button class="copy" onclick="copyMd('ta1','ok1')">Copy Markdown</button>
+      </div>
+      <textarea class="md" id="ta1" readonly></textarea>
+    </div>
+
+    <!-- Stages -->
+    <div class="card">
+      <div class="section-title">
+        <h2>Table 2 — Stages</h2>
+        <span class="meta" id="meta2"></span>
+      </div>
+      <div class="copy-bar">
+        <span class="copy-ok" id="ok2"></span>
+        <button class="copy" onclick="copyMd('ta2','ok2')">Copy Markdown</button>
+      </div>
+      <textarea class="md" id="ta2" readonly></textarea>
+    </div>
+
+    <!-- Activity Types -->
+    <div class="card">
+      <div class="section-title">
+        <h2>Table 3 — Activity Types</h2>
+        <span class="meta" id="meta3"></span>
+      </div>
+      <div class="copy-bar">
+        <span class="copy-ok" id="ok3"></span>
+        <button class="copy" onclick="copyMd('ta3','ok3')">Copy Markdown</button>
+      </div>
+      <textarea class="md" id="ta3" readonly></textarea>
+    </div>
+
+  </div><!-- /results -->
+</div>
+
+<script>
+const BASE_V2 = 'https://api.pipedrive.com/api/v2';
+const BASE_V1 = 'https://api.pipedrive.com/v1';
+
+/* ── low-level fetch ── */
+async function apiGet(url, token) {
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: { 'x-api-token': token, 'Accept': 'application/json' }
+  });
+  if (!res.ok) {
+    let msg = `HTTP ${res.status}`;
+    try {
+      const j = await res.json();
+      msg += ': ' + (j.error || j.message || JSON.stringify(j).slice(0, 150));
+    } catch (_) { msg += ' ' + (await res.text()).slice(0, 150); }
+    throw new Error(msg);
+  }
+  const j = await res.json();
+  if (!j.success) throw new Error('success=false — ' + (j.error || JSON.stringify(j).slice(0, 150)));
+  return j;
+}
+
+/* v1 offset pagination */
+async function fetchV1(path, token, extra = {}) {
+  const records = [];
+  let start = 0;
+  const limit = 500;
+  while (true) {
+    const url = new URL(`${BASE_V1}/${path}`);
+    url.searchParams.set('limit', String(limit));
+    url.searchParams.set('start', String(start));
+    Object.entries(extra).forEach(([k, v]) => url.searchParams.set(k, String(v)));
+    const j = await apiGet(url.toString(), token);
+    (j.data || []).forEach(r => records.push(r));
+    const more = j.additional_data?.pagination?.more_items_in_collection;
+    if (!more) break;
+    start += limit;
+  }
+  return records;
+}
+
+/* v2 cursor pagination */
+async function fetchV2(path, token, extra = {}) {
+  const records = [];
+  let cursor = null;
+  do {
+    const url = new URL(`${BASE_V2}/${path}`);
+    url.searchParams.set('limit', '500');
+    if (cursor) url.searchParams.set('cursor', cursor);
+    Object.entries(extra).forEach(([k, v]) => url.searchParams.set(k, String(v)));
+    const j = await apiGet(url.toString(), token);
+    (j.data || []).forEach(r => records.push(r));
+    cursor = j.additional_data?.next_cursor || null;
+  } while (cursor);
+  return records;
+}
+
+/* ── UI helpers ── */
+function setStatus(msg, cls) {
+  const el = document.getElementById('statusMsg');
+  el.textContent = msg;
+  el.className = 'status-msg ' + (cls || 'info');
+}
+
+function dotSet(i, s) {
+  const d = document.getElementById('dot_' + i);
+  if (d) d.className = 'dot ' + s;
+}
+function lblSet(i, t) {
+  const l = document.getElementById('lbl_' + i);
+  if (l) l.textContent = t;
+}
+
+/* ── Markdown helpers ── */
+function esc(v) {
+  return (v == null ? '' : String(v)).replace(/\|/g, '\\|').replace(/[\r\n]+/g, ' ').trim();
+}
+
+function mdTable(cols, rows) {
+  const sep = cols.map(c => '-'.repeat(Math.max(c.length, 3)));
+  return [
+    '| ' + cols.join(' | ') + ' |',
+    '| ' + sep.join(' | ') + ' |',
+    ...rows.map(r => '| ' + r.map(esc).join(' | ') + ' |')
+  ].join('\n');
+}
+
+/* ── Table builders ── */
+function buildPipelines(pipelines) {
+  if (!pipelines.length) return '_No pipelines found._';
+  const rows = pipelines.map(p => [
+    String(p.id ?? ''),
+    p.name || '',
+    p.active !== undefined ? (p.active ? 'Yes' : 'No') : '',
+    String(p.order_nr ?? ''),
+    p.add_time || '',
+  ]);
+  return mdTable(['Pipeline ID', 'Name', 'Active', 'Order', 'Created at'], rows);
+}
+
+function buildStages(stages, pipelineMap) {
+  if (!stages.length) return '_No stages found._';
+  const rows = stages.map(s => [
+    String(s.id ?? ''),
+    s.name || '',
+    String(s.pipeline_id ?? ''),
+    pipelineMap[s.pipeline_id] || '',
+    String(s.order_nr ?? ''),
+    s.deal_probability !== undefined ? String(s.deal_probability) + '%' : '',
+    s.active !== undefined ? (s.active ? 'Yes' : 'No') :
+      (s.active_flag !== undefined ? (s.active_flag ? 'Yes' : 'No') : ''),
+  ]);
+  return mdTable(
+    ['Stage ID', 'Name', 'Pipeline ID', 'Pipeline name', 'Order', 'Deal probability', 'Active'],
+    rows
+  );
+}
+
+function buildActivityTypes(types) {
+  if (!types.length) return '_No activity types found._';
+  const rows = types.map(t => [
+    String(t.id ?? ''),
+    t.name || '',
+    t.key_string || '',
+    t.icon_key || '',
+    t.color || '',
+    t.active_flag !== undefined ? (t.active_flag ? 'Yes' : 'No') : '',
+    String(t.order_nr ?? ''),
+  ]);
+  return mdTable(
+    ['ID', 'Name', 'Key string', 'Icon', 'Color', 'Active', 'Order'],
+    rows
+  );
+}
+
+/* ── main ── */
+async function run() {
+  const token = document.getElementById('token').value.trim();
+  if (!token) { setStatus('Please paste your Pipedrive API token first.', 'err'); return; }
+
+  const btn = document.getElementById('runBtn');
+  btn.disabled = true;
+  document.getElementById('results').style.display = 'none';
+  setStatus('Starting…', 'info');
+
+  const steps = [
+    { label: 'Pipelines  (v1)' },
+    { label: 'Stages  (v2)' },
+    { label: 'Activity Types  (v1)' },
+  ];
+
+  const prog = document.getElementById('progressList');
+  prog.style.display = 'flex';
+  prog.innerHTML = steps.map((s, i) =>
+    `<div class="prow"><div class="dot" id="dot_${i}"></div><span id="lbl_${i}">${s.label}</span></div>`
+  ).join('');
+
+  let pipelines = [], stages = [], activityTypes = [];
+  let errCount = 0;
+
+  /* 0 — Pipelines (v1, offset) */
+  dotSet(0, 'spin');
+  try {
+    pipelines = await fetchV1('pipelines', token);
+    dotSet(0, 'done');
+    lblSet(0, `Pipelines — ${pipelines.length} found`);
+    document.getElementById('meta1').textContent = `${pipelines.length} pipelines`;
+  } catch (e) {
+    dotSet(0, 'fail');
+    lblSet(0, `Pipelines — ✗ ${e.message.slice(0, 90)}`);
+    errCount++;
+  }
+
+  /* 1 — Stages (v2, cursor) */
+  dotSet(1, 'spin');
+  try {
+    stages = await fetchV2('stages', token);
+    dotSet(1, 'done');
+    lblSet(1, `Stages — ${stages.length} found`);
+    document.getElementById('meta2').textContent = `${stages.length} stages`;
+  } catch (e) {
+    dotSet(1, 'fail');
+    lblSet(1, `Stages — ✗ ${e.message.slice(0, 90)}`);
+    errCount++;
+  }
+
+  /* 2 — Activity Types (v1, single call) */
+  dotSet(2, 'spin');
+  try {
+    activityTypes = await fetchV1('activityTypes', token);
+    dotSet(2, 'done');
+    lblSet(2, `Activity Types — ${activityTypes.length} found`);
+    document.getElementById('meta3').textContent = `${activityTypes.length} types`;
+  } catch (e) {
+    dotSet(2, 'fail');
+    lblSet(2, `Activity Types — ✗ ${e.message.slice(0, 90)}`);
+    errCount++;
+  }
+
+  if (errCount === steps.length) {
+    setStatus('All requests failed. Verify that your API token is correct and active.', 'err');
+    btn.disabled = false;
+    return;
+  }
+
+  /* Build pipeline ID → name lookup for stage join */
+  const pipelineMap = {};
+  pipelines.forEach(p => { pipelineMap[p.id] = p.name || ''; });
+
+  document.getElementById('ta1').value = buildPipelines(pipelines);
+  document.getElementById('ta2').value = buildStages(stages, pipelineMap);
+  document.getElementById('ta3').value = buildActivityTypes(activityTypes);
+  document.getElementById('results').style.display = 'block';
+
+  const total = pipelines.length + stages.length + activityTypes.length;
+  setStatus(
+    `Done — ${pipelines.length} pipeline${pipelines.length !== 1 ? 's' : ''}, ` +
+    `${stages.length} stage${stages.length !== 1 ? 's' : ''}, ` +
+    `${activityTypes.length} activity type${activityTypes.length !== 1 ? 's' : ''}.` +
+    (errCount ? ` (${errCount} request${errCount > 1 ? 's' : ''} failed)` : ''),
+    errCount ? 'err' : 'ok'
+  );
+  btn.disabled = false;
+}
+
+function copyMd(taId, okId) {
+  const txt = document.getElementById(taId).value;
+  navigator.clipboard.writeText(txt).then(() => {
+    const el = document.getElementById(okId);
+    el.textContent = 'Copied!';
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2200);
+  });
+}
+
+document.getElementById('token').addEventListener('keydown', e => {
+  if (e.key === 'Enter') run();
+});
+</script>
+</body>
+</html>

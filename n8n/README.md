@@ -10,13 +10,27 @@ Neste repositório registro alguns modelos de automações e trechos de códigos
 | -------------- | ------------------------- |
 | [Website Check](samples/websitecheck.md) | Webhook para validar se há um site live em um domínio |
 
+## Templates
+
+| Template       | Descrição                 |
+| -------------- | ------------------------- |
+| [Stripe → RD Station Marketing](templates/stripe-checkout-rdmkt.md) | Registra pagamentos confirmados no Stripe como evento de pedido no RD Station Marketing |
+
 ## Utilidades
 
 | Arquivo        | Descrição                 |
 | -------------- | ------------------------- |
 | [Binário de/para ASCII](utils/binary-ascii.md) | Convertendo dados binários para ASCII e vice-versa |
+| [Gráficos em imagem](utils/chart-images.md) | Gerando imagens de gráficos via QuickChart |
 | [Datas](utils/dates.md) | Formatação e tratamento de datas |
+| [JSON Query](utils/json-query.md) | Consultando e filtrando JSON com JMESPath |
+| [Nomes](utils/names.md) | Separando primeiro nome e sobrenome |
+| [Pivot de dados](utils/pivot-data.md) | Transformando valores de uma key em colunas |
 | [Renomear arquivos](utils/renameFile.md) | Renomeando arquivo baixado com HTTP Request ou carregados do file system |
 
 ## Setup
 - [Instalando o N8N na Amazon](setup-aws-lightsail.md)
+
+## Node customizado
+
+Desenvolvi um node customizado para integrar o N8N com o RD Station Marketing. Disponível no NPM: [n8n-nodes-rdstation-marketing](https://www.npmjs.com/package/n8n-nodes-rdstation-marketing)
