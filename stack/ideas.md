@@ -7,3 +7,6 @@ Ideas and things to watch
 - [nanoid-good](https://github.com/y-gagar1n/nanoid-good): a lib to generate URL safe nano ids
 - [Docusaurus](https://docusaurus.io/): Open-source static documentation site supported by Meta
 - [Home Assistant Core on Android](https://community.home-assistant.io/t/home-assistant-core-on-android-tablet/250174)
+- [Entri](https://www.entri.com/): facilita setup de DNS e venda de domínios para SaaS
+- [Data for SEO](https://dataforseo.com/): API com MCP para extração de SERP e volume de buscas, substitui SEM Rush e integra diretamente no Claude - funciona em modelo de créditos pré-pagos
+- [bytemine](https://www.bytemine.ai/): B2C mobile phones and email enrichment + standard B2B data enrich
