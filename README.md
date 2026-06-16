@@ -1,43 +1,78 @@
-# Welcome to Fred Carbonare's Open Notebook! 👋
+# Fred Carbonare
 
-Thanks for stopping by my open notebook. Feel free to explore my notes and use them as a quick reference whenever you find something useful.
+**GTM Engineer · RevOps · Marketing-Tech Leader**
 
-## About Me
+I design GTM strategy and build the systems that run it — CRM architecture, automation, outbound infrastructure, AI workflows, and the SOPs that make them stick.
 
-I'm Fred Carbonare, a tech enthusiast, and here's a bit more about me:
+10+ years on both sides of a wall most professionals never cross: marketing strategy and digital product engineering. CMO and CTO at the same company, in the same role.
 
-- 👨‍👩‍👧‍👧 I'm a family man, blessed with a wonderful wife and three beautiful daughters.
-- 🌍 Originally from São Paulo, Brazil, I've called Milan, Italy, my home since 2019.
-- 💙 I love to travel, cook, enjoy good food, spend time with friends, garden, and listen to great music.
+📍 Milan, Italy · 🌐 Remote · 🗣️ English C1 · Italian C1 · Portuguese (native)
 
-## What I Do
+---
 
-I wear multiple hats in the tech world:
+## 🔧 What I'm building right now
 
-- 💼 Currently, I'm the Chief Technology Officer (CTO) at [BLANC Fashion](https://www.blancfashion.com), a pioneering fashiontech company dedicated to helping brands transform their wholesale and direct-to-consumer sales operations through digitalization.
-- 🚀 I also proudly serve as the Chairman of [Olivas Digital](https://www.olivas.digital), a digital agency that I co-founded in 2013. It's been an incredible journey so far.
+- **GTM Engineer** @ [Sales Surge](https://www.salessurge.com) — Pipedrive Gold Partner (NL). Revenue tech stack implementation for B2B clients across Europe: Pipedrive, Zoho, Make, n8n, Apollo, Instantly, AI workflows.
+- **Co-founder** @ Bravoflow — productized automation and revenue operations services for early-stage B2B companies.
+- **Advisor** @ [BLANC Fashion](https://www.blancfashion.com) — pre-seed B2B SaaS for fashion wholesale (formerly CMO & CTO, Jan 2023 – Jan 2026).
+- **Advisor** @ [Olivas Digital](https://www.olivas.digital) — software house + digital marketing agency I co-founded in 2013.
 
-## My Academic Journey
+---
 
-I'm a firm believer in the power of continuous learning. Here's a comprehensive look at my academic background:
+## 📊 Selected outcomes
 
-- 🧠 **Big Data, Data Science, and Artificial Intelligence** - I'm currently on a journey of lifelong learning in the exciting fields of Big Data, Data Science, and Artificial Intelligence. I'm pursuing this educational endeavor at [PUC-RS](https://online.pucrs.br/mba/mba-tecnologia-para-negocios-inteligencia-artificial-data-science-big-data), where I'm exploring the endless possibilities that this field offers.
+| Metric | Context |
+|---|---|
+| **766%** organic traffic growth | BLANC Fashion — 3 months fully live |
+| **185%** marketing ROI | BLANC Fashion — $138.5k revenue / $48.5k cost |
+| **70%** product adoption | BLANC Fashion — admin interface redesign |
+| **3×** B2B lead volume | ASTER Security — same media budget |
+| **+102%** annual revenue | Mandala Comidas — 2020 e-commerce restructuring |
+| **+587%** email channel revenue | Mandala Comidas — retention program |
+| **R$150M** sales from R$150k ad spend | Jota3w — real estate paid media |
 
-- 🎓 **Technology Entrepreneurship: Lab to Market** - In October 2022, I successfully completed the Technology Entrepreneurship: Lab to Market program offered by HarvardX. This immersive program provided me with invaluable insights into the world of technology startups and entrepreneurship.
+---
 
-- 📚 **Universidade Presbiteriana Mackenzie** - My academic journey began with a Bachelor of Science (BS) degree in Marketing from Universidade Presbiteriana Mackenzie, where I studied from 2002 to 2005. This period laid the foundation for my career in the business world.
+## 🛠️ Stack
 
-- 🏫 **Instituto de Ensino Santo Ivo** - My educational journey began even earlier at Instituto de Ensino Santo Ivo, where I completed my high school education from 1998 to 2000.
+```
+CRM            Pipedrive · HubSpot · Salesforce · Zoho
+Automation     Make.com · n8n · Zapier
+Outbound       Apollo · Instantly · Clay
+Data           SQL · GA4 · Mixpanel · Looker Studio
+Product        Figma · Jira · Confluence
+Code           SQL · JavaScript · REST APIs · AI workflow design
+Cloud          AWS · Linux
+```
 
-My commitment to learning is unwavering, and I'm excited to apply the knowledge gained from these diverse educational experiences to contribute meaningfully to the ever-evolving tech landscape. Feel free to explore my open notebook to see how these academic pursuits have shaped my perspectives and insights.
+---
 
-## Let's Connect
+## 📂 Case studies
 
-Want to chat, collaborate, or just say hello? You can reach me on:
+- **BLANC Fashion** — building a GTM machine from zero for a pre-seed fashion SaaS. CRM, ICP, SDR playbook, sales process, digital launch, channel experiments.
+- **ASTER Security** — how a small B2B security company tripled leads without increasing media spend, through inbound and sales enablement.
+- **Mandala Comidas Especiais** — how a specialty food e-commerce grew revenue 87% during the pandemic through e-commerce restructuring and retention.
 
-- [LinkedIn](https://www.linkedin.com/in/fcarbonare/)
-- [Instagram](https://instagram.com/fredcarbonare)
+Available on [LinkedIn](https://linkedin.com/in/fcarbonare).
 
-Looking forward to connecting with you!
+---
 
-Happy exploring! 📚
+## 📚 Education
+
+- **MBA — IT Management: AI, Big Data & Analytics** · PUC-RS · 2023–2024 · Grade 8.4/10
+- **BA — Marketing & Communications** · Universidade Presbiteriana Mackenzie · 2002–2005
+- **Technology Entrepreneurship: Lab to Market** · HarvardX · 2022
+- **AI for Product Management** · Pendo.io · 2024
+- **Registered Scrum Basics™** · ScrumInc · 2025
+- **GEO — Generative Engine Optimization** · 2025
+- **SEO Advanced** · RD Station · 2022
+
+---
+
+## 🤝 Reach out
+
+- [LinkedIn](https://linkedin.com/in/fcarbonare) — the best place to start a conversation
+- [Substack](https://fredcarbonare.substack.com) — notes on GTM, RevOps, and marketing-tech
+- 📧 fcarbonare@gmail.com
+
+Open to conversations about **GTM Engineering, RevOps, Solutions Engineering, and hybrid marketing-tech leadership roles** at B2B SaaS companies — Series A through C, remote-first, internationally distributed teams.

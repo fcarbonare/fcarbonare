@@ -1,5 +1,9 @@
 # Claude: anotações e exemplos práticos de uso do Claude AI
 
+## Adding MCP to project only
+
+claude mcp add --transport http name-xxx --scope project https://mcp.xxx
+
 ## Skills
 
 - [Marketing skills](https://github.com/coreyhaines31/marketingskills) by Corey Haines: repositório super completo com skills prontas e de uso livre (MIT license)
