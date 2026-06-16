@@ -12,7 +12,7 @@ I design GTM strategy and build the systems that run it — CRM architecture, au
 
 ## 🔧 What I'm building right now
 
-- **GTM Engineer** @ [Sales Surge](https://www.salessurge.com) — Pipedrive Gold Partner (NL). Revenue tech stack implementation for B2B clients across Europe: Pipedrive, Zoho, Make, n8n, Apollo, Instantly, AI workflows.
+- **GTM Engineer** @ [Sales Surge](https://sales-surge.nl/) — Pipedrive Gold Partner (NL). Revenue tech stack implementation for B2B clients across Europe: Pipedrive, Zoho, Make, n8n, Apollo, Instantly, AI workflows.
 - **Co-founder** @ Bravoflow — productized automation and revenue operations services for early-stage B2B companies.
 - **Advisor** @ [BLANC Fashion](https://www.blancfashion.com) — pre-seed B2B SaaS for fashion wholesale (formerly CMO & CTO, Jan 2023 – Jan 2026).
 - **Advisor** @ [Olivas Digital](https://www.olivas.digital) — software house + digital marketing agency I co-founded in 2013.
@@ -36,7 +36,7 @@ I design GTM strategy and build the systems that run it — CRM architecture, au
 ## 🛠️ Stack
 
 ```
-CRM            Pipedrive · HubSpot · Salesforce · Zoho
+CRM            Pipedrive · HubSpot · Salesforce · Zoho · RD Station
 Automation     Make.com · n8n · Zapier
 Outbound       Apollo · Instantly · Clay
 Data           SQL · GA4 · Mixpanel · Looker Studio
@@ -73,6 +73,5 @@ Available on [LinkedIn](https://linkedin.com/in/fcarbonare).
 
 - [LinkedIn](https://linkedin.com/in/fcarbonare) — the best place to start a conversation
 - [Substack](https://fredcarbonare.substack.com) — notes on GTM, RevOps, and marketing-tech
-- 📧 fcarbonare@gmail.com
 
 Open to conversations about **GTM Engineering, RevOps, Solutions Engineering, and hybrid marketing-tech leadership roles** at B2B SaaS companies — Series A through C, remote-first, internationally distributed teams.
