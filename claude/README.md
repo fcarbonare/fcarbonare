@@ -7,6 +7,7 @@ claude mcp add --transport http name-xxx --scope project https://mcp.xxx
 ## Skills
 
 - [Marketing skills](https://github.com/coreyhaines31/marketingskills) by Corey Haines: repositório super completo com skills prontas e de uso livre (MIT license)
+- [superpowers](https://github.com/obra/superpowers): Superpowers is a complete software development methodology for your coding agents, built on top of a set of composable skills and some initial instructions that make sure your agent uses them.
 
 ## Usefull tools
 - [RTK](https://github.com/rtk-ai/rtk): High-performance CLI proxy that reduces LLM token consumption by 60-90%
